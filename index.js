@@ -31,14 +31,29 @@ async function run() {
 
 
 
+
+    app.post('/addServices', async(req,res)=>{
+        const service = req.body
+        const result = await addServiceCollection.insertOne(service)
+        res.send(result)
+    })
+
+    app.get('/addServices', async(req,res)=>{
+        const result = await addServiceCollection.find().toArray()
+        res.send(result)
+    })
+
+
+
+
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
