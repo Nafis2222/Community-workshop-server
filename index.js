@@ -11,7 +11,7 @@ app.use(express.json())
 // 24WJPS1QvwuovzSJ
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://community_repair:24WJPS1QvwuovzSJ@cluster0.e9gq9mr.mongodb.net/?retryWrites=true&w=majority";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -40,6 +40,14 @@ async function run() {
 
     app.get('/addServices', async(req,res)=>{
         const result = await addServiceCollection.find().toArray()
+        res.send(result)
+    })
+
+
+    app.delete('/addServices/:id', async(req,res)=>{
+        const id = req.params.id
+        const query = {_id: new ObjectId(id)}
+        const result  = await addServiceCollection.deleteOne(query)
         res.send(result)
     })
 
