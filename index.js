@@ -27,6 +27,8 @@ async function run() {
   try {
 
     const addServiceCollection = await client.db('RepairDb').collection('addServices')
+    const OurServiceCollection = await client.db('RepairDb').collection('ourServices')
+
 
 
 
@@ -68,6 +70,16 @@ async function run() {
         updatedUSer,
         options
       );
+      res.send(result)
+    })
+
+
+
+
+    // Time to get our services details here as well
+
+    app.get('/ourServices' , async(req,res)=>{
+      const result = await OurServiceCollection.find().toArray()
       res.send(result)
     })
 
