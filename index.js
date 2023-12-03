@@ -27,11 +27,23 @@ async function run() {
   try {
 
     const addServiceCollection = await client.db('RepairDb').collection('addServices')
+    const BookedServiceCollection = await client.db('RepairDb').collection('bookedServices')
     const OurServiceCollection = await client.db('RepairDb').collection('ourServices')
 
+    // bookedServices
+
+    app.post('/bookedServices', async(req,res)=>{
+        const book = req.body
+        const result = await BookedServiceCollection.insertOne(book)
+        res.send(result)
+    })
 
 
 
+
+
+
+    // addServices
 
 
     app.post('/addServices', async(req,res)=>{
