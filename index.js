@@ -29,6 +29,13 @@ async function run() {
     const addServiceCollection = await client.db('RepairDb').collection('addServices')
     const BookedServiceCollection = await client.db('RepairDb').collection('bookedServices')
     const OurServiceCollection = await client.db('RepairDb').collection('ourServices')
+    const StoryCollection = await client.db('RepairDb').collection('story')
+
+    app.get('/story', async(req,res)=>{
+        const result = await StoryCollection.find().toArray()
+        res.send(result)
+    })
+
 
     // bookedServices
 
@@ -61,6 +68,15 @@ async function run() {
         const result = await addServiceCollection.find().toArray()
         res.send(result)
     })
+
+    app.get('/addServices/:id', async(req,res)=>{
+        const id = req.params.id
+        const query = {_id: new ObjectId(id)}
+        const result = await addServiceCollection.findOne(query)
+        res.send(result)
+    })
+
+
 
 
     app.delete('/addServices/:id', async(req,res)=>{
