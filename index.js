@@ -11,6 +11,8 @@ app.use(express.json())
 // 24WJPS1QvwuovzSJ
 
 
+
+
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://community_repair:24WJPS1QvwuovzSJ@cluster0.e9gq9mr.mongodb.net/?retryWrites=true&w=majority";
 
@@ -46,7 +48,11 @@ async function run() {
     })
 
     app.get('/bookedServices', async(req,res)=>{
-        const result = await BookedServiceCollection.find().toArray()
+        let query = {}
+        if(req.query?.email){
+            query = {email: req.query.email}
+        }
+        const result = await BookedServiceCollection.find(query).toArray()
         res.send(result)
     })
 
